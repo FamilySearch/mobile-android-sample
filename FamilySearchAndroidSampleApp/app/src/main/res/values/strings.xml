@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FamilySearch Android Sample App</string>
+
+    <!-- Login activity -->
+    <string name="login_username_label">Username:</string>
+    <string name="login_username_hint">username</string>
+    <string name="login_password_label">Password:</string>
+    <string name="login_password_hint">password</string>
+    <string name="login_button_login">Login</string>
+
+</resources>
