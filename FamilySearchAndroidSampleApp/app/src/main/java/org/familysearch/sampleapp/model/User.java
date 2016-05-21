@@ -1,9 +1,12 @@
 package org.familysearch.sampleapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Eduardo Flores
  */
-public class User
+public class User implements Parcelable
 {
     private String id;
 
@@ -153,5 +156,62 @@ public class User
 
     public void setTreeUserId(String treeUserId) {
         this.treeUserId = treeUserId;
+    }
+
+    public User()
+    {
+        // empty constructor
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(contactName);
+        dest.writeString(helperAccessPin);
+        dest.writeString(givenName);
+        dest.writeString(familyName);
+        dest.writeString(email);
+        dest.writeString(country);
+        dest.writeString(gender);
+        dest.writeString(birthDate);
+        dest.writeString(phoneNumber);
+        dest.writeString(mailingAddress);
+        dest.writeString(preferredLanguage);
+        dest.writeString(displayName);
+        dest.writeString(personId);
+        dest.writeString(treeUserId);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    private User(Parcel in) {
+        id = in.readString();
+        contactName = in.readString();
+        helperAccessPin = in.readString();
+        givenName = in.readString();
+        familyName = in.readString();
+        email = in.readString();
+        country = in.readString();
+        gender = in.readString();
+        birthDate = in.readString();
+        phoneNumber = in.readString();
+        mailingAddress = in.readString();
+        preferredLanguage = in.readString();
+        displayName = in.readString();
+        personId = in.readString();
+        treeUserId = in.readString();
     }
 }

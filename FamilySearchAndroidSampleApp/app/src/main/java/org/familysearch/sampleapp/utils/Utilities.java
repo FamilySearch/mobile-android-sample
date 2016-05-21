@@ -24,6 +24,8 @@ public class Utilities
 
     public static final String KEY_SHARED_PREFERENCES = "shared_preferences";
 
+    public static final String KEY_USER = "user";
+
     public static Links getUrlsFromCollections()
     {
         final String collectionUrlString = "https://familysearch.org/platform/collection";

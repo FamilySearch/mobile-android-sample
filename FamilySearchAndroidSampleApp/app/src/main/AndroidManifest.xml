@@ -20,9 +20,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.CurrentUserActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:name=".activity.TreeActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

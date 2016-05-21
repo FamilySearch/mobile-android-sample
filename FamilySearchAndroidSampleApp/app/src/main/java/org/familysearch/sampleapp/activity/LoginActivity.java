@@ -4,6 +4,7 @@ import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.LoginListener;
 import org.familysearch.sampleapp.model.User;
 import org.familysearch.sampleapp.service.LoginServices;
+import org.familysearch.sampleapp.utils.Utilities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -59,7 +60,9 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
 
         if(user != null)
         {
-            Toast.makeText(this, "user = " + user.getDisplayName(), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, TreeActivity.class);
+            intent.putExtra(Utilities.KEY_USER, user);
+            startActivity(intent);
         }
         else
         {
