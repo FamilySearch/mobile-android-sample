@@ -7,5 +7,10 @@
     <string name="login_password_label">Password:</string>
     <string name="login_password_hint">password</string>
     <string name="login_button_login">Login</string>
+    <string name="login_progress_message">Logging in...</string>
+
+    <!-- Error messages -->
+    <string name="login_error_catalogs">Error getting the collection urls</string>
+    <string name="login_error_token">Error getting the token. Check username and password</string>
 
 </resources>

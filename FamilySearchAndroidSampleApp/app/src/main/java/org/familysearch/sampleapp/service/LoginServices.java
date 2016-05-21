@@ -1,12 +1,20 @@
 package org.familysearch.sampleapp.service;
 
 import org.familysearch.sampleapp.AppKeys;
+import org.familysearch.sampleapp.LoginActivity;
+import org.familysearch.sampleapp.R;
+import org.familysearch.sampleapp.listener.LoginListener;
 import org.familysearch.sampleapp.model.Token;
+import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -24,87 +32,46 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * @author Eduardo Flores
  */
-public class LoginServices extends AsyncTask<String, String, String> {
+public class LoginServices extends AsyncTask<String, String, Token> {
 
-    private final String collectionUrlString = "https://familysearch.org/platform/collection";
+    private Context context;
 
-    private String tokenUrl;
+    private LoginActivity activity;
 
-    private String currentUserUrl;
+    private LoginListener loginListener;
+
+    private ProgressDialog progressDialog;
+
+    public LoginServices(Context context)
+    {
+        this.context = context;
+        activity = (LoginActivity) context;
+    }
+
+    public void setOnLoginListener(LoginListener loginListener)
+    {
+        this.loginListener = loginListener;
+    }
 
     @Override
-    protected String doInBackground(String... params) {
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setMessage(context.getString(R.string.login_progress_message));
+        progressDialog.show();
+    }
+
+    @Override
+    protected Token doInBackground(String... params) {
 
         // the params we expect are username and password, in that order
         String username = params[0];
         String password = params[1];
 
         // begin by getting the token url
-        // this network call is a GET call without authentication
-        getUrlsFromCollections();
-
-        System.out.println("tokenUrl = " + tokenUrl);
-        System.out.println("currentUserUrl = " + currentUserUrl);
-
         // call the token url with username, password and client_id/api_key to get a token
-        Token token = getToken(tokenUrl, username, password, AppKeys.API_KEY);
-
-        System.out.println("token = " + token);
-
-        return null;
-    }
-
-    private void getUrlsFromCollections() {
-        try {
-            // send the collection url
-            URL collectionUrl = new URL(collectionUrlString);
-            HttpURLConnection connection = (HttpURLConnection) collectionUrl.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Accept", "application/json");
-
-            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            {
-                // read the response of the collection url
-                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-                // convert the inputStream response to String
-                StringBuilder stringBuilder = new StringBuilder(inputStream.available());
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line).append('\n');
-                }
-                String responseString = stringBuilder.toString();
-
-                // convert the response from String to JSONObject
-                JSONObject responseJsonObject = new JSONObject(responseString);
-
-                // traverse the 'collections' json array
-                JSONArray collectionsArray = responseJsonObject.getJSONArray("collections");
-                for (int i = 0; i < collectionsArray.length(); i++) {
-                    JSONObject object = collectionsArray.getJSONObject(i);
-                    if (object.has("links")) {
-                        JSONObject links = object.getJSONObject("links");
-                        JSONObject tokenUrlObject = links.getJSONObject("http://oauth.net/core/2.0/endpoint/token");
-                        tokenUrl = tokenUrlObject.getString("href");
-
-                        JSONObject currentUserObject = links.getJSONObject("current-user");
-                        currentUserUrl = currentUserObject.getString("href");
-                    }
-                }
-            }
-            else
-            {
-                System.err.println("Error getting the collection urls");
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        return getToken(Utilities.getUrlsFromCollections().getTokenUrlString(), username, password, AppKeys.API_KEY);
     }
 
     private Token getToken(String tokenUrlAsString, String username, String password, String client_id)
@@ -132,6 +99,7 @@ public class LoginServices extends AsyncTask<String, String, String> {
             dataOutputStream.flush();
             dataOutputStream.close();
 
+            // invalid username and password returns an error 400 Bad Request
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
             {
                 // read the response of the collection url
@@ -154,14 +122,7 @@ public class LoginServices extends AsyncTask<String, String, String> {
                 token.setToken(responseJsonObject.getString("token"));
                 token.setAccess_token(responseJsonObject.getString("access_token"));
                 token.setToken_type(responseJsonObject.getString("token_type"));
-                return token;
             }
-            else
-            {
-                // invalid username and password returns an error 400 Bad Request
-                System.err.println("Error getting the token. Check username and password");
-            }
-
         } catch (ProtocolException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -173,5 +134,17 @@ public class LoginServices extends AsyncTask<String, String, String> {
         }
 
         return token;
+    }
+
+    @Override
+    protected void onPostExecute(Token token) {
+        super.onPostExecute(token);
+
+        if (progressDialog.isShowing())
+        {
+            progressDialog.dismiss();
+        }
+
+        loginListener.onLoginSucceeded(token);
     }
 }
