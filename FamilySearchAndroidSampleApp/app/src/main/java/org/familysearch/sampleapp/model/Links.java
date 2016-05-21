@@ -9,6 +9,8 @@ public class Links
 
     private String currentUserString;
 
+    private String familyTreeUrlString;
+
     public String getTokenUrlString() {
         return tokenUrlString;
     }
@@ -23,5 +25,13 @@ public class Links
 
     public void setCurrentUserString(String currentUserString) {
         this.currentUserString = currentUserString;
+    }
+
+    public String getFamilyTreeUrlString() {
+        return familyTreeUrlString;
+    }
+
+    public void setFamilyTreeUrlString(String familyTreeUrlString) {
+        this.familyTreeUrlString = familyTreeUrlString;
     }
 }

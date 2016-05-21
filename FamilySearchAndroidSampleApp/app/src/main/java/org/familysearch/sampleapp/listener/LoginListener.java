@@ -1,11 +1,11 @@
 package org.familysearch.sampleapp.listener;
 
-import org.familysearch.sampleapp.model.Token;
+import org.familysearch.sampleapp.model.User;
 
 /**
  * @author Eduardo Flores
  */
 public interface LoginListener {
 
-    void onLoginSucceeded(Token token);
+    void onLoginSucceeded(User user);
 }

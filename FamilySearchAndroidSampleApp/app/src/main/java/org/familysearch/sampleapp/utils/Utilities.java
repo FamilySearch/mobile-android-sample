@@ -20,6 +20,9 @@ import java.util.ArrayList;
  */
 public class Utilities
 {
+    public static final String KEY_ACCESS_TOKEN = "access_token";
+
+    public static final String KEY_SHARED_PREFERENCES = "shared_preferences";
 
     public static Links getUrlsFromCollections()
     {
@@ -63,9 +66,11 @@ public class Utilities
                             JSONObject linksObject = object.getJSONObject("links");
                             JSONObject tokenUrlObject = linksObject.getJSONObject("http://oauth.net/core/2.0/endpoint/token");
                             JSONObject currentUserObject = linksObject.getJSONObject("current-user");
+                            JSONObject familyTreeObject = linksObject.getJSONObject("family-tree");
 
                             links.setTokenUrlString(tokenUrlObject.getString("href"));
                             links.setCurrentUserString(currentUserObject.getString("href"));
+                            links.setFamilyTreeUrlString(familyTreeObject.getString("href"));
                         }
                     }
                 }

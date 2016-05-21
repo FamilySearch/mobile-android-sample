@@ -1,17 +1,18 @@
-package org.familysearch.sampleapp;
+package org.familysearch.sampleapp.activity;
 
+import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.LoginListener;
-import org.familysearch.sampleapp.model.Token;
+import org.familysearch.sampleapp.model.User;
 import org.familysearch.sampleapp.service.LoginServices;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity implements LoginListener {
@@ -54,11 +55,11 @@ public class LoginActivity extends AppCompatActivity implements LoginListener {
     }
 
     @Override
-    public void onLoginSucceeded(Token token) {
+    public void onLoginSucceeded(User user) {
 
-        if(token != null && token.getAccess_token() != null)
+        if(user != null)
         {
-            System.out.println("onLoginSucceeded LoginActivity. Token = " + token.getAccess_token());
+            Toast.makeText(this, "user = " + user.getDisplayName(), Toast.LENGTH_LONG).show();
         }
         else
         {

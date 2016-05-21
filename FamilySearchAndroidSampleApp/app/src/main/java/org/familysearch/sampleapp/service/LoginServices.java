@@ -1,20 +1,19 @@
 package org.familysearch.sampleapp.service;
 
 import org.familysearch.sampleapp.AppKeys;
-import org.familysearch.sampleapp.LoginActivity;
+import org.familysearch.sampleapp.activity.LoginActivity;
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.LoginListener;
-import org.familysearch.sampleapp.model.Token;
+import org.familysearch.sampleapp.model.User;
 import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -32,7 +31,7 @@ import javax.net.ssl.HttpsURLConnection;
 /**
  * @author Eduardo Flores
  */
-public class LoginServices extends AsyncTask<String, String, Token> {
+public class LoginServices extends AsyncTask<String, String, User> {
 
     private Context context;
 
@@ -63,7 +62,7 @@ public class LoginServices extends AsyncTask<String, String, Token> {
     }
 
     @Override
-    protected Token doInBackground(String... params) {
+    protected User doInBackground(String... params) {
 
         // the params we expect are username and password, in that order
         String username = params[0];
@@ -71,12 +70,18 @@ public class LoginServices extends AsyncTask<String, String, Token> {
 
         // begin by getting the token url
         // call the token url with username, password and client_id/api_key to get a token
-        return getToken(Utilities.getUrlsFromCollections().getTokenUrlString(), username, password, AppKeys.API_KEY);
+        String token = getToken(Utilities.getUrlsFromCollections().getTokenUrlString(), username, password, AppKeys.API_KEY);
+
+        // with the token, make another call the get the current user data
+        User user = getCurrentUserData(Utilities.getUrlsFromCollections().getCurrentUserString(), token);
+
+        return user;
     }
 
-    private Token getToken(String tokenUrlAsString, String username, String password, String client_id)
+    private String getToken(String tokenUrlAsString, String username, String password, String client_id)
     {
-        Token token = null;
+        String token = null;
+
         String grant_type = "password";
 
         String params = "username=" + username +
@@ -117,11 +122,12 @@ public class LoginServices extends AsyncTask<String, String, Token> {
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
 
-                // assign the received values to a new Token object
-                token = new Token();
-                token.setToken(responseJsonObject.getString("token"));
-                token.setAccess_token(responseJsonObject.getString("access_token"));
-                token.setToken_type(responseJsonObject.getString("token_type"));
+                // assign the received values to the token string, and save the token to shared preferences for later use
+                token = responseJsonObject.getString("access_token");
+                SharedPreferences sharedPreferences = context.getSharedPreferences(Utilities.KEY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Utilities.KEY_ACCESS_TOKEN, token);
+                editor.commit();
             }
         } catch (ProtocolException e) {
             e.printStackTrace();
@@ -136,15 +142,79 @@ public class LoginServices extends AsyncTask<String, String, Token> {
         return token;
     }
 
+    private User getCurrentUserData(String urlString, String accessToken)
+    {
+        User user = null;
+        try {
+            // send the collection url
+            URL collectionUrl = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) collectionUrl.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                // read the response of the collection url
+                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                // convert the inputStream response to String
+                StringBuilder stringBuilder = new StringBuilder(inputStream.available());
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line).append('\n');
+                }
+                String responseString = stringBuilder.toString();
+
+                // convert the response from String to JSONObject
+                JSONObject responseJsonObject = new JSONObject(responseString);
+
+                if (responseJsonObject.has("users"))
+                {
+                    // traverse the 'users' json array
+                    JSONArray usersArray = responseJsonObject.getJSONArray("users");
+
+                    // There should be only 1 user
+                    JSONObject userJsonObject = usersArray.getJSONObject(0);
+                    user = new User();
+                    user.setId(userJsonObject.getString("id"));
+                    user.setContactName(userJsonObject.getString("contactName"));
+                    user.setHelperAccessPin(userJsonObject.getString("helperAccessPin"));
+                    user.setGivenName(userJsonObject.getString("givenName"));
+                    user.setFamilyName(userJsonObject.getString("familyName"));
+                    user.setEmail(userJsonObject.getString("email"));
+                    user.setCountry(userJsonObject.getString("country"));
+                    user.setGender(userJsonObject.getString("gender"));
+                    user.setBirthDate(userJsonObject.getString("birthDate"));
+                    user.setPhoneNumber(userJsonObject.getString("phoneNumber"));
+                    user.setMailingAddress(userJsonObject.getString("mailingAddress"));
+                    user.setPreferredLanguage(userJsonObject.getString("preferredLanguage"));
+                    user.setDisplayName(userJsonObject.getString("displayName"));
+                    user.setPersonId(userJsonObject.getString("personId"));
+                    user.setTreeUserId(userJsonObject.getString("treeUserId"));
+                }
+            }
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
     @Override
-    protected void onPostExecute(Token token) {
-        super.onPostExecute(token);
+    protected void onPostExecute(User user) {
+        super.onPostExecute(user);
 
         if (progressDialog.isShowing())
         {
             progressDialog.dismiss();
         }
 
-        loginListener.onLoginSucceeded(token);
+        loginListener.onLoginSucceeded(user);
     }
 }
