@@ -142,19 +142,19 @@ public class LoginServices extends AsyncTask<String, String, User> {
         return token;
     }
 
-    private User getCurrentUserData(String urlString, String accessToken)
+    private User getCurrentUserData(String currentUserUrlString, String accessToken)
     {
         User user = null;
         try {
-            // send the collection url
-            URL collectionUrl = new URL(urlString);
-            HttpURLConnection connection = (HttpURLConnection) collectionUrl.openConnection();
+            // send the currentUser url
+            URL currentUserUrl = new URL(currentUserUrlString);
+            HttpURLConnection connection = (HttpURLConnection) currentUserUrl.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                // read the response of the collection url
+                // read the response of the currentUser url
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 

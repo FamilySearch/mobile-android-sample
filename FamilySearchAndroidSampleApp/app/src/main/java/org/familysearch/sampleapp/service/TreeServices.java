@@ -45,18 +45,18 @@ public class TreeServices extends AsyncTask<String, String, String> {
         return null;
     }
 
-    private String getAncestryQueryUrlAsString(String genericTreeUrl) {
+    private String getAncestryQueryUrlAsString(String genericTreeUrlString) {
         String ancestryQueryString = null;
 
         try {
-            // send the collection url
-            URL collectionUrl = new URL(genericTreeUrl);
-            HttpURLConnection connection = (HttpURLConnection) collectionUrl.openConnection();
+            // send the tree url
+            URL genericTreeUrl = new URL(genericTreeUrlString);
+            HttpURLConnection connection = (HttpURLConnection) genericTreeUrl.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                // read the response of the collection url
+                // read the response of the tree url
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -106,15 +106,15 @@ public class TreeServices extends AsyncTask<String, String, String> {
             ancestryUrlString = ancestryUrlString + "?" + "person=" + userPersonId;
             ancestryUrlString = ancestryUrlString + "&" + "generations=" + "4";
 
-            // send the collection url
-            URL collectionUrl = new URL(ancestryUrlString);
-            HttpURLConnection connection = (HttpURLConnection) collectionUrl.openConnection();
+            // send the ancestry url
+            URL ancestryUrl = new URL(ancestryUrlString);
+            HttpURLConnection connection = (HttpURLConnection) ancestryUrl.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
             connection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                // read the response of the collection url
+                // read the response of the ancestry url
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
