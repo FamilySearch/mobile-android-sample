@@ -13,6 +13,8 @@ public class Display
 
     private String ascendancyNumber;
 
+    private String descendancyNumber;
+
     public String getName() {
         return name;
     }
@@ -43,5 +45,13 @@ public class Display
 
     public void setAscendancyNumber(String ascendancyNumber) {
         this.ascendancyNumber = ascendancyNumber;
+    }
+
+    public String getDescendancyNumber() {
+        return descendancyNumber;
+    }
+
+    public void setDescendancyNumber(String descendancyNumber) {
+        this.descendancyNumber = descendancyNumber;
     }
 }
