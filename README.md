@@ -1,2 +1,2 @@
 # mobile-android-sample
-Sample mobile native android app
+Sample mobile native android app.
