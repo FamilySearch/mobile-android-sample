@@ -1,2 +1,8 @@
+/.gradle
+/local.properties
+/.idea
+/.DS_Store
 /build
-/app/src/main/java/org/familysearch/sampleapp/AppKeys.java
+*.iml
+
+app/src/main/java/org/familysearch/sampleapp/AppKeys.java
