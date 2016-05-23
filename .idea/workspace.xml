@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1de4d1c7-b310-4b81-b76d-5b39424723ed" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/org/familysearch/sampleapp/AppKeys.java" afterPath="$PROJECT_DIR$/app/src/main/java/org/familysearch/sampleapp/AppKeys.java" />
     </list>
     <ignored path="mobile-android-sample.iws" />
@@ -30,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/org/familysearch/sampleapp/AppKeys.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.2658228">
-              <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+              <caret line="7" column="49" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -2202,7 +2203,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/org/familysearch/sampleapp/AppKeys.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2658228">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
+          <caret line="7" column="49" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
           <folding />
         </state>
       </provider>
