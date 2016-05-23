@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="23"
+    density="420dpi"
+    format="7"
+    timestamp="583003252985" >
+
+    <task
+        name="javac"
+        duration="5643" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="1128" />
+    <task
+        name="verifier"
+        duration="105" />
+
+    <artifact
+        location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="583003252985" >
+        <artifact
+            location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>
