@@ -5,5 +5,5 @@ package org.familysearch.sampleapp;
  */
 public class AppKeys
 {
-    public static final String API_KEY = "your_API_key";
+    public static final String API_KEY = "some_key";
 }
