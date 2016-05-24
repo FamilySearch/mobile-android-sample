@@ -5,6 +5,9 @@ import org.familysearch.sampleapp.activity.TreeActivity;
 import org.familysearch.sampleapp.listener.TreeListener;
 import org.familysearch.sampleapp.model.User;
 import org.familysearch.sampleapp.model.ancestry.Display;
+import org.familysearch.sampleapp.model.ancestry.Links;
+import org.familysearch.sampleapp.model.ancestry.LinksPersons;
+import org.familysearch.sampleapp.model.ancestry.Person;
 import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
@@ -165,8 +168,16 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
                     {
                         Persons persons = new Persons();
                         Display personsDisplay = new Display();
+                        LinksPersons linksPersons = new LinksPersons();
+                        Person person = new Person();
+
                         JSONObject personsObject = personsJsonArray.getJSONObject(i);
                         JSONObject personsDisplayObject = personsObject.getJSONObject("display");
+
+                        JSONObject personsLinksObject = personsObject.getJSONObject("links");
+                        JSONObject personPersonObject = personsLinksObject.getJSONObject("person");
+                        person.setHref(personPersonObject.getString("href"));
+                        linksPersons.setPerson(person);
 
                         persons.setId(personsObject.getString("id"));
 
@@ -183,6 +194,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
                             personsDisplay.setDescendancyNumber(personsDisplayObject.getString("descendancyNumber"));
                         }
 
+                        persons.setLinks(linksPersons);
                         persons.setDisplay(personsDisplay);
                         personsList.add(persons);
                     }
