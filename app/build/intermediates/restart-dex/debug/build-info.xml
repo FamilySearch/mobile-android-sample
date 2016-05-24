@@ -4,7 +4,7 @@
     api-level="23"
     density="420dpi"
     format="7"
-    timestamp="4217488095903" >
+    timestamp="4865946102323" >
 
     <task
         name="javac"
@@ -34,6 +34,6 @@
             location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/intermediates/res/resources-debug.ap_"
             type="RESOURCES" />
     </build>
-    <build timestamp="4217488095903" />
+    <build timestamp="4865946102323" />
 
 </instant-run>
