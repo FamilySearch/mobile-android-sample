@@ -13,6 +13,8 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
 public class TreeActivity extends ListActivity implements TreeListener {
 
     private LruCache<String, Bitmap> memoryCache;
+
+    private List<Persons> personsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,17 @@ public class TreeActivity extends ListActivity implements TreeListener {
     public void onGeneaologySucceeded(List<Persons> personsList) {
         Toast.makeText(this, "Found " + personsList.size() + " people in your geneaology", Toast.LENGTH_LONG).show();
 
+        this.personsList = personsList;
         TreeAdapter treeAdapter = new TreeAdapter(this, personsList, memoryCache);
         setListAdapter(treeAdapter);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+
+        Persons persons = personsList.get(position);
+        Toast.makeText(this, "Selected " + persons.getDisplay().getName(), Toast.LENGTH_SHORT).show();
+
     }
 }

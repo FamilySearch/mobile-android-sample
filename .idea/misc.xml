@@ -43,7 +43,4 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-  <component name="SvnConfiguration">
-    <configuration useDefault="false">/usr/local/bin/svn</configuration>
-  </component>
 </project>
