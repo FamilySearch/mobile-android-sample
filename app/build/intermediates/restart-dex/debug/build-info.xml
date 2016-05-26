@@ -4,36 +4,29 @@
     api-level="23"
     density="420dpi"
     format="7"
-    timestamp="4865946102323" >
+    timestamp="575810838574" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="2769" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="785" />
     <task
         name="verifier"
-        duration="0" />
+        duration="58" />
 
-    <build timestamp="1630328753672" >
+    <artifact
+        location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="575810838574" >
         <artifact
             location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
     </build>
-    <build timestamp="3867825485109" >
-        <artifact
-            location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_8/classes.dex"
-            type="DEX" />
-    </build>
-    <build timestamp="4012060813561" >
-        <artifact
-            location="/Users/Eduardo/Documents/Code/FamilySearch/mobile-android-sample/app/build/intermediates/res/resources-debug.ap_"
-            type="RESOURCES" />
-    </build>
-    <build timestamp="4865946102323" />
 
 </instant-run>

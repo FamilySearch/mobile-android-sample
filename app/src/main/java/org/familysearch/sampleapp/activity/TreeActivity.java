@@ -9,6 +9,8 @@ import org.familysearch.sampleapp.service.TreeServices;
 import org.familysearch.sampleapp.utils.Utilities;
 
 import android.app.ListActivity;
+import android.graphics.Bitmap;
+import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -17,9 +19,29 @@ import java.util.List;
 
 public class TreeActivity extends ListActivity implements TreeListener {
 
+    private LruCache<String, Bitmap> memoryCache;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // setup memory for image cache
+        // Get max available VM memory, exceeding this amount will throw an
+        // OutOfMemory exception. Stored in kilobytes as LruCache takes an
+        // int in its constructor.
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        // Use 1/8th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / 8;
+
+        memoryCache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                return bitmap.getByteCount() / 1024;
+            }
+        };
 
         User user = getIntent().getParcelableExtra(Utilities.KEY_USER);
 
@@ -32,7 +54,7 @@ public class TreeActivity extends ListActivity implements TreeListener {
     public void onGeneaologySucceeded(List<Persons> personsList) {
         Toast.makeText(this, "Found " + personsList.size() + " people in your geneaology", Toast.LENGTH_LONG).show();
 
-        TreeAdapter treeAdapter = new TreeAdapter(this, personsList);
+        TreeAdapter treeAdapter = new TreeAdapter(this, personsList, memoryCache);
         setListAdapter(treeAdapter);
     }
 }
