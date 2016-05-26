@@ -9,6 +9,7 @@ import org.familysearch.sampleapp.service.TreeServices;
 import org.familysearch.sampleapp.utils.Utilities;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
@@ -68,7 +69,8 @@ public class TreeActivity extends ListActivity implements TreeListener {
         super.onListItemClick(l, v, position, id);
 
         Persons persons = personsList.get(position);
-        Toast.makeText(this, "Selected " + persons.getDisplay().getName(), Toast.LENGTH_SHORT).show();
-
+        Intent intent = new Intent(this, PersonDetailsActivity.class);
+        intent.putExtra(Utilities.KEY_PERSONS, persons);
+        startActivity(intent);
     }
 }

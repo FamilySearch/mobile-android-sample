@@ -26,6 +26,8 @@ public class Utilities
 
     public static final String KEY_USER = "user";
 
+    public static final String KEY_PERSONS = "persons";
+
     public static Links getUrlsFromCollections()
     {
         final String collectionUrlString = "https://familysearch.org/platform/collection";

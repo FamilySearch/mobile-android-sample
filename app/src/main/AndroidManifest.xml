@@ -23,6 +23,8 @@
             android:name=".activity.TreeActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activity.PersonDetailsActivity">
+        </activity>
     </application>
 
 </manifest>
