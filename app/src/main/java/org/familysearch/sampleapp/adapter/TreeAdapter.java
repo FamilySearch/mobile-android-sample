@@ -53,7 +53,7 @@ public class TreeAdapter extends ArrayAdapter<Persons> implements ImageDownloade
         Bitmap fsLogoBitmap = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.ic_familysearchlogo);
         ancestorPicture.setImageBitmap(fsLogoBitmap);
-        loadBitmap(person.getId(), ancestorPicture, person);
+        loadBitmapForPersons(context, memoryCache, person.getId(), ancestorPicture, person);
 
         ancestorName.setText(person.getDisplay().getName());
         ancestorLifespan.setText(person.getDisplay().getLifespan());
@@ -76,7 +76,8 @@ public class TreeAdapter extends ArrayAdapter<Persons> implements ImageDownloade
         return memoryCache.get(key);
     }
 
-    public void loadBitmap(String imageKey, ImageView imageView, Persons person) {
+    public void loadBitmapForPersons(Context context, LruCache<String, Bitmap> memoryCache,
+            String imageKey, ImageView imageView, Persons person) {
         //final String imageKey = String.valueOf(position);
 
         final Bitmap bitmap = getBitmapFromMemCache(imageKey);

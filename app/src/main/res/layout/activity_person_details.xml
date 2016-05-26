@@ -15,8 +15,9 @@
         android:id="@+id/person_details_picture"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/thumb200"
-        android:scaleType="center"
+        android:src="@drawable/ic_familysearchlogo"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
     />
 
     <android.support.v4.widget.Space
