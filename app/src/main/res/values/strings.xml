@@ -12,6 +12,12 @@
     <!-- Tree activity -->
     <string name="tree_downloading_geneaology">Downloading your geneaology...</string>
 
+    <!-- Person details activity -->
+    <string name="person_details_birthdate_downloading">Downloading birth date...</string>
+    <string name="person_details_deathdate_downloading">Downloading death date...</string>
+    <string name="person_details_birthdate">Birth:</string>
+    <string name="person_details_deathdate">Death:</string>
+
     <!-- Error messages -->
     <string name="login_error_catalogs">Error getting the collection urls</string>
     <string name="login_error_token">Error getting the token. Check username and password</string>

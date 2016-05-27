@@ -4,6 +4,7 @@ import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.ImageDownloaderListener;
 import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.service.ImageDownloaderServices;
+import org.familysearch.sampleapp.service.PersonDetailsServices;
 import org.familysearch.sampleapp.utils.Utilities;
 
 import android.graphics.Bitmap;
@@ -29,13 +30,16 @@ public class PersonDetailsActivity extends AppCompatActivity implements ImageDow
         TextView personBirth = (TextView) findViewById(R.id.person_details_birth);
         TextView personDeath = (TextView) findViewById(R.id.person_details_death);
 
-        ImageDownloaderServices task = new ImageDownloaderServices(this, personPicture, null);
-        task.setOnImageDownloaderListener(this);
-        task.execute(persons.getLinks().getPerson().getHref());
+        ImageDownloaderServices imageDownloaderTask = new ImageDownloaderServices(this, personPicture, null);
+        imageDownloaderTask.setOnImageDownloaderListener(this);
+        imageDownloaderTask.execute(persons.getLinks().getPerson().getHref());
 
+        // since we can't implement 2 listeners, we need to pass the textviews to the task
+        // and make the task display the downloaded elements
+        PersonDetailsServices personsTask = new PersonDetailsServices(this, personBirth, personDeath);
+        personsTask.execute(persons.getLinks().getPerson().getHref());
 
         personName.setText(persons.getDisplay().getName());
-        personBirth.setText(persons.getDisplay().getLifespan());
     }
 
     @Override
