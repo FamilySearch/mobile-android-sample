@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">FamilySearch Android Sample App</string>
 
+    <!-- Options Menu -->
+    <string name="menu_name_home">Home</string>
+    <string name="menu_name_tree">Tree</string>
+    <string name="menu_name_memories">Memories</string>
+
     <!-- Login activity -->
     <string name="login_username_label">Username:</string>
     <string name="login_username_hint">username</string>

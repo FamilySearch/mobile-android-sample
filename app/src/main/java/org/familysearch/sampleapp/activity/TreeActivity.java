@@ -14,6 +14,8 @@ import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -74,5 +76,11 @@ public class TreeActivity extends ListActivity implements TreeListener {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_options, menu);
+        return true;
+    }
 }
