@@ -27,5 +27,6 @@
     <string name="login_error_catalogs">Error getting the collection urls</string>
     <string name="login_error_token">Error getting the token. Check username and password</string>
     <string name="title_activity_current_user">CurrentUserActivity</string>
+    <string name="current_activity">You are currently in</string>
 
 </resources>
