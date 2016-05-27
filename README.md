@@ -5,7 +5,8 @@ Sample mobile native android app.
 In order to use this demo application you must first have installed:
 * [Android Studio](https://developer.android.com/studio/index.html)
 * Android SDK version 23 (Can be installed from within Android Studio, or with homebrew `brew install android-sdk`)
-* An API key issued by Family Search. Place ths key inside of `AppKeys.java`
+* [JDK7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+* An API key [issued by Family Search](https://familysearch.org/developers/). Place ths key inside of `AppKeys.java`
 
 ### Create AppKeys.java file
 In the root of the `sampleApp` folder, add a new java and name if `AppKeys.java`.
