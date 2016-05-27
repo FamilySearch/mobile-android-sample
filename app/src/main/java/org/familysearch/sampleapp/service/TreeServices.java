@@ -132,8 +132,6 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
     private List<Persons> getAncestryTree(String ancestryUrlString, String userPersonId, String accessToken)
     {
-        List<Persons> personsList = null;
-
         try {
             ancestryUrlString = ancestryUrlString + "?" + "person=" + userPersonId;
             ancestryUrlString = ancestryUrlString + "&" + "generations=" + "4";
@@ -160,45 +158,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
-                if (responseJsonObject.has("persons"))
-                {
-                    JSONArray personsJsonArray = responseJsonObject.getJSONArray("persons");
-                    personsList = new ArrayList<>();
-                    for (int i = 0; i < personsJsonArray.length(); i++)
-                    {
-                        Persons persons = new Persons();
-                        Display personsDisplay = new Display();
-                        LinksPersons linksPersons = new LinksPersons();
-                        Person person = new Person();
-
-                        JSONObject personsObject = personsJsonArray.getJSONObject(i);
-                        JSONObject personsDisplayObject = personsObject.getJSONObject("display");
-
-                        JSONObject personsLinksObject = personsObject.getJSONObject("links");
-                        JSONObject personPersonObject = personsLinksObject.getJSONObject("person");
-                        person.setHref(personPersonObject.getString("href"));
-                        linksPersons.setPerson(person);
-
-                        persons.setId(personsObject.getString("id"));
-
-                        personsDisplay.setName(personsDisplayObject.getString("name"));
-                        personsDisplay.setGender(personsDisplayObject.getString("gender"));
-                        personsDisplay.setLifespan(personsDisplayObject.getString("lifespan"));
-
-                        if (personsDisplayObject.has("ascendancyNumber"))
-                        {
-                            personsDisplay.setAscendancyNumber(personsDisplayObject.getString("ascendancyNumber"));
-                        }
-                        if (personsDisplayObject.has("descendancyNumber"))
-                        {
-                            personsDisplay.setDescendancyNumber(personsDisplayObject.getString("descendancyNumber"));
-                        }
-
-                        persons.setLinks(linksPersons);
-                        persons.setDisplay(personsDisplay);
-                        personsList.add(persons);
-                    }
-                }
+                return Utilities.getListOfPersonsFromPersonsJsonObject(responseJsonObject);
             }
         }
         catch (IOException e) {
@@ -206,7 +166,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return personsList;
+        return null;
     }
 
     @Override

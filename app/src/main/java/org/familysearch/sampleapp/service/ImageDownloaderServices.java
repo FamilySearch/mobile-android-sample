@@ -1,5 +1,6 @@
 package org.familysearch.sampleapp.service;
 
+import org.familysearch.sampleapp.listener.ImageDownloaderListener;
 import org.familysearch.sampleapp.utils.Utilities;
 
 import android.content.Context;
@@ -22,12 +23,21 @@ public class ImageDownloaderServices extends AsyncTask<String, String, Bitmap> {
 
     private ImageView imageView;
 
-    public ImageDownloaderServices(Context context, ImageView imageView)
+    private String imageCacheKey;
+
+    private ImageDownloaderListener listener;
+
+    public ImageDownloaderServices(Context context, ImageView imageView, String imageCacheKey)
     {
         this.context = context;
         this.imageView = imageView;
+        this.imageCacheKey = imageCacheKey;
     }
 
+    public void setOnImageDownloaderListener(ImageDownloaderListener listener)
+    {
+        this.listener = listener;
+    }
 
     @Override
     protected Bitmap doInBackground(String... params) {
@@ -88,7 +98,7 @@ public class ImageDownloaderServices extends AsyncTask<String, String, Bitmap> {
 
         if (bitmap != null)
         {
-            imageView.setImageBitmap(bitmap);
+            listener.onPictureDownloadSucceeded(imageCacheKey, bitmap, imageView);
         }
     }
 }

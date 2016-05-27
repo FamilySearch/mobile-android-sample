@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">FamilySearch Android Sample App</string>
 
+    <!-- Options Menu -->
+    <string name="menu_name_home">Home</string>
+    <string name="menu_name_tree">Tree</string>
+    <string name="menu_name_memories">Memories</string>
+
     <!-- Login activity -->
     <string name="login_username_label">Username:</string>
     <string name="login_username_hint">username</string>
@@ -12,9 +17,16 @@
     <!-- Tree activity -->
     <string name="tree_downloading_geneaology">Downloading your geneaology...</string>
 
+    <!-- Person details activity -->
+    <string name="person_details_birthdate_downloading">Downloading birth date...</string>
+    <string name="person_details_deathdate_downloading">Downloading death date...</string>
+    <string name="person_details_birthdate">Birth:</string>
+    <string name="person_details_deathdate">Death:</string>
+
     <!-- Error messages -->
     <string name="login_error_catalogs">Error getting the collection urls</string>
     <string name="login_error_token">Error getting the token. Check username and password</string>
     <string name="title_activity_current_user">CurrentUserActivity</string>
+    <string name="current_activity">You are currently in</string>
 
 </resources>

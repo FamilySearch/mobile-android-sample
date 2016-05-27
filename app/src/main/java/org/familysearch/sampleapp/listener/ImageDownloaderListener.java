@@ -1,12 +1,13 @@
 package org.familysearch.sampleapp.listener;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 /**
  * @author Eduardo Flores
  */
 public interface ImageDownloaderListener
 {
-    void onPictureDownloadsucceeded(Bitmap bitmap);
+    void onPictureDownloadSucceeded(String key, Bitmap bitmap, ImageView imageView);
 
 }
