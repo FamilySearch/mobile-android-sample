@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="EDUARDO FLORES"
+        android:text="@string/person_details_name_placeholder"
         android:gravity="center_horizontal"
     />
 
@@ -41,7 +41,7 @@
         android:id="@+id/person_details_birth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BIRTH"
+        android:text="@string/person_details_birthdate"
         android:gravity="center_horizontal"
     />
 
@@ -49,7 +49,7 @@
         android:id="@+id/person_details_death"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="DEATH"
+        android:text="@string/person_details_deathdate"
         android:gravity="center_horizontal"
     />
 

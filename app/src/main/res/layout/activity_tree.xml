@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:text="EDUARDO FLORES"
+            android:text="@string/tree_name_placeholder"
             android:textStyle="bold"
         />
 
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:text="LIVING"/>
+            android:text="@string/tree_lifespan_placeholder"/>
 
     </LinearLayout>
 
