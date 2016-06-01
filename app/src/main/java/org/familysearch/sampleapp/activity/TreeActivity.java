@@ -34,6 +34,8 @@ public class TreeActivity extends ListActivity implements TreeListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getActionBar().setTitle(getString(R.string.tree_title));
+
         // setup memory for image cache
         // Get max available VM memory, exceeding this amount will throw an
         // OutOfMemory exception. Stored in kilobytes as LruCache takes an

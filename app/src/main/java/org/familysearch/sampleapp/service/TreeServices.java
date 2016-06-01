@@ -56,6 +56,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage(context.getString(R.string.tree_downloading_geneaology));
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 

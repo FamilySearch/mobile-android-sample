@@ -58,6 +58,7 @@ public class LoginServices extends AsyncTask<String, String, User> {
 
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage(context.getString(R.string.login_progress_message));
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 

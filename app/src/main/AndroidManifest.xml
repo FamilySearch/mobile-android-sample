@@ -21,11 +21,15 @@
         </activity>
         <activity
             android:name=".activity.TreeActivity"
-            android:theme="@android:style/Theme.Holo.Light"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light">
         </activity>
         <activity
             android:name=".activity.PersonDetailsActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.MemoriesActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

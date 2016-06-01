@@ -1,0 +1,15 @@
+package org.familysearch.sampleapp.activity;
+
+import org.familysearch.sampleapp.R;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MemoriesActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_memories);
+    }
+}
