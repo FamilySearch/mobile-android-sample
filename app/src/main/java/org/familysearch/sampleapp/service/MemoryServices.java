@@ -2,6 +2,7 @@ package org.familysearch.sampleapp.service;
 
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.activity.MemoriesActivity;
+import org.familysearch.sampleapp.listener.MemoriesListener;
 import org.familysearch.sampleapp.model.memory.ImageThumbnail;
 import org.familysearch.sampleapp.model.memory.Links;
 import org.familysearch.sampleapp.model.memory.Memories;
@@ -15,6 +16,8 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -33,7 +36,7 @@ import java.util.List;
 /**
  * @author Eduardo Flores
  */
-public class MemoryServices extends AsyncTask<String, String, Memories>
+public class MemoryServices extends AsyncTask<String, String, List<Bitmap>>
 {
     private Context context;
 
@@ -43,11 +46,18 @@ public class MemoryServices extends AsyncTask<String, String, Memories>
 
     private ProgressDialog progressDialog;
 
+    private MemoriesListener listener;
+
     public MemoryServices(Context context, User user)
     {
         this.context = context;
         this.user = user;
         activity = (MemoriesActivity) context;
+    }
+
+    public void setOnMemoriesListener(MemoriesListener listener)
+    {
+        this.listener = listener;
     }
 
     protected void onPreExecute() {
@@ -60,17 +70,17 @@ public class MemoryServices extends AsyncTask<String, String, Memories>
     }
 
     @Override
-    protected Memories doInBackground(String... params) {
+    protected List<Bitmap> doInBackground(String... params) {
 
         SharedPreferences preferences = context.getSharedPreferences(Utilities.KEY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         String accessToken = preferences.getString(Utilities.KEY_ACCESS_TOKEN, null);
 
-        return getMemoriesForUser(user, accessToken);
+        return getMemoriesImagesForUser(user, accessToken);
     }
 
-    private Memories getMemoriesForUser(User user, String accessToken)
+    private List<Bitmap> getMemoriesImagesForUser(User user, String accessToken)
     {
-        Memories memories = null;
+        List<Bitmap> bitmapList = null;
         try
         {
             // send the logged user's artifact link
@@ -99,10 +109,8 @@ public class MemoryServices extends AsyncTask<String, String, Memories>
 
                 if (responseJsonObject.has("sourceDescriptions"))
                 {
-                    memories = new Memories();
-                    SourceDescriptions sourceDescriptions = new SourceDescriptions();
                     JSONArray sourceDescriptionJsonArray = responseJsonObject.getJSONArray("sourceDescriptions");
-                    List<SourceDescriptions> sourceDescriptionsList = new ArrayList<>();
+                    bitmapList = new ArrayList<>();
 
                     for (int i = 0; i < sourceDescriptionJsonArray.length(); i++)
                     {
@@ -113,8 +121,6 @@ public class MemoryServices extends AsyncTask<String, String, Memories>
                             // only download memories that are jpeg images
                             if (sourceDescriptionsJsonObject.getString("mediaType").equalsIgnoreCase("image/jpeg"))
                             {
-                                sourceDescriptions.setMediaType(sourceDescriptionsJsonObject.getString("mediaType"));
-
                                 // get image thumbnail link url
                                 if (sourceDescriptionsJsonObject.has("links"))
                                 {
@@ -124,23 +130,23 @@ public class MemoryServices extends AsyncTask<String, String, Memories>
                                     {
                                         JSONObject imageThumbnailJsonObject = linksJsonObject.getJSONObject("image-thumbnail");
 
-                                        Links links = new Links();
-                                        ImageThumbnail imageThumbnail = new ImageThumbnail();
-                                        imageThumbnail.setHref(imageThumbnailJsonObject.getString("href"));
+                                        // download bitmap object
+                                        // send the image url from href
+                                        URL imageUrl = new URL(imageThumbnailJsonObject.getString("href"));
+                                        connection = (HttpURLConnection) imageUrl.openConnection();
+                                        connection.setRequestMethod("GET");
 
-                                        links.setImageThumbnail(imageThumbnail);
-                                        sourceDescriptions.setLinks(links);
+                                        if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+                                        {
+                                            inputStream = connection.getInputStream();
+                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                            bitmapList.add(bitmap);
+                                        }
                                     }
                                 }
                             }
-
                         }
-
-
-                        sourceDescriptionsList.add(sourceDescriptions);
                     }
-
-                    memories.setSourceDescriptions(sourceDescriptionsList);
                 }
             }
 
@@ -153,16 +159,18 @@ public class MemoryServices extends AsyncTask<String, String, Memories>
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return memories;
+        return bitmapList;
     }
 
     @Override
-    protected void onPostExecute(Memories memories) {
+    protected void onPostExecute(List<Bitmap> memories) {
         super.onPostExecute(memories);
 
         if (progressDialog.isShowing())
         {
             progressDialog.dismiss();
         }
+
+        listener.onMemoriesBitmapSucceeded(memories);
     }
 }
