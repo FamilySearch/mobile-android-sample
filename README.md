@@ -1,5 +1,7 @@
 # mobile-android-sample
-Sample mobile native android app.
+This is a sample native android app that you can use as a starting point in creating your own mobile app that integrates with FamilySearch APIs.
+
+For other sample apps and SDK information see https://familysearch.org/developers/libraries
 
 ### Tools required
 In order to use this demo application you must first have installed:
