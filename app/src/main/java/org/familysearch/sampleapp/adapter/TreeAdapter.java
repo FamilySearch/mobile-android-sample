@@ -1,11 +1,14 @@
 package org.familysearch.sampleapp.adapter;
 
 import org.familysearch.sampleapp.R;
+import org.familysearch.sampleapp.activity.PersonDetailsActivity;
 import org.familysearch.sampleapp.listener.ImageDownloaderListener;
 import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.service.ImageDownloaderServices;
+import org.familysearch.sampleapp.utils.Utilities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.util.LruCache;
@@ -31,7 +34,7 @@ public class TreeAdapter extends ArrayAdapter<Persons> implements ImageDownloade
     private LruCache<String, Bitmap> memoryCache;
 
     public TreeAdapter(Context context, List<Persons> objects, LruCache<String, Bitmap> memoryCache) {
-        super(context, R.layout.activity_tree, objects);
+        super(context, R.layout.tree_item, objects);
 
         this.context = context;
         this.personsList = objects;
@@ -39,12 +42,12 @@ public class TreeAdapter extends ArrayAdapter<Persons> implements ImageDownloade
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, ViewGroup parent) {
 
-        Persons person = personsList.get(position);
+        final Persons person = personsList.get(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.activity_tree, parent, false);
+        View rowView = inflater.inflate(R.layout.tree_item, parent, false);
         LinearLayout layout = (LinearLayout) rowView.findViewById(R.id.tree_ancestor_layout);
         ImageView ancestorPicture = (ImageView) rowView.findViewById(R.id.tree_ancestor_picture);
         TextView ancestorName = (TextView) rowView.findViewById(R.id.tree_ancestor_name);
@@ -58,6 +61,16 @@ public class TreeAdapter extends ArrayAdapter<Persons> implements ImageDownloade
         ancestorName.setText(person.getDisplay().getName());
         ancestorLifespan.setText(person.getDisplay().getLifespan());
         layout.setVisibility(View.VISIBLE);
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PersonDetailsActivity.class);
+                intent.putExtra(Utilities.KEY_PERSONS, person);
+                context.startActivity(intent);
+            }
+        });
+
         return rowView;
     }
 
