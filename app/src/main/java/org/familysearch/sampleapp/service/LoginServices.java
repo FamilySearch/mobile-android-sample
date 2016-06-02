@@ -4,7 +4,7 @@ import org.familysearch.sampleapp.AppKeys;
 import org.familysearch.sampleapp.activity.LoginActivity;
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.LoginListener;
-import org.familysearch.sampleapp.model.User;
+import org.familysearch.sampleapp.model.user.User;
 import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -122,6 +123,7 @@ public class LoginServices extends AsyncTask<String, String, User> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
+                Log.i(Utilities.LOG_TAG, "LoginServices.getToken() data: " + responseJsonObject.toString());
 
                 // assign the received values to the token string, and save the token to shared preferences for later use
                 token = responseJsonObject.getString("access_token");
@@ -169,6 +171,7 @@ public class LoginServices extends AsyncTask<String, String, User> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
+                Log.i(Utilities.LOG_TAG, "LoginServices.getCurrentUserData() data: " + responseJsonObject.toString());
 
                 if (responseJsonObject.has("users"))
                 {

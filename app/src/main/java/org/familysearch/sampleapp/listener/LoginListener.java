@@ -1,6 +1,6 @@
 package org.familysearch.sampleapp.listener;
 
-import org.familysearch.sampleapp.model.User;
+import org.familysearch.sampleapp.model.user.User;
 
 /**
  * @author Eduardo Flores

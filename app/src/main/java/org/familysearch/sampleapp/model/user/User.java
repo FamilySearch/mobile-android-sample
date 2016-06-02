@@ -1,4 +1,4 @@
-package org.familysearch.sampleapp.model;
+package org.familysearch.sampleapp.model.user;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -37,6 +37,8 @@ public class User implements Parcelable
     private String personId;
 
     private String treeUserId;
+
+    private Links links;
 
     public String getId() {
         return id;
@@ -158,6 +160,14 @@ public class User implements Parcelable
         this.treeUserId = treeUserId;
     }
 
+    public Links getLinks() {
+        return links;
+    }
+
+    public void setLinks(Links links) {
+        this.links = links;
+    }
+
     public User()
     {
         // empty constructor
@@ -170,48 +180,52 @@ public class User implements Parcelable
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(id);
-        dest.writeString(contactName);
-        dest.writeString(helperAccessPin);
-        dest.writeString(givenName);
-        dest.writeString(familyName);
-        dest.writeString(email);
-        dest.writeString(country);
-        dest.writeString(gender);
-        dest.writeString(birthDate);
-        dest.writeString(phoneNumber);
-        dest.writeString(mailingAddress);
-        dest.writeString(preferredLanguage);
-        dest.writeString(displayName);
-        dest.writeString(personId);
-        dest.writeString(treeUserId);
+        dest.writeString(this.id);
+        dest.writeString(this.contactName);
+        dest.writeString(this.helperAccessPin);
+        dest.writeString(this.givenName);
+        dest.writeString(this.familyName);
+        dest.writeString(this.email);
+        dest.writeString(this.country);
+        dest.writeString(this.gender);
+        dest.writeString(this.birthDate);
+        dest.writeString(this.phoneNumber);
+        dest.writeString(this.mailingAddress);
+        dest.writeString(this.preferredLanguage);
+        dest.writeString(this.displayName);
+        dest.writeString(this.personId);
+        dest.writeString(this.treeUserId);
+        dest.writeParcelable(this.links, flags);
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+    protected User(Parcel in) {
+        this.id = in.readString();
+        this.contactName = in.readString();
+        this.helperAccessPin = in.readString();
+        this.givenName = in.readString();
+        this.familyName = in.readString();
+        this.email = in.readString();
+        this.country = in.readString();
+        this.gender = in.readString();
+        this.birthDate = in.readString();
+        this.phoneNumber = in.readString();
+        this.mailingAddress = in.readString();
+        this.preferredLanguage = in.readString();
+        this.displayName = in.readString();
+        this.personId = in.readString();
+        this.treeUserId = in.readString();
+        this.links = in.readParcelable(Links.class.getClassLoader());
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
         }
 
+        @Override
         public User[] newArray(int size) {
             return new User[size];
         }
     };
-
-    private User(Parcel in) {
-        id = in.readString();
-        contactName = in.readString();
-        helperAccessPin = in.readString();
-        givenName = in.readString();
-        familyName = in.readString();
-        email = in.readString();
-        country = in.readString();
-        gender = in.readString();
-        birthDate = in.readString();
-        phoneNumber = in.readString();
-        mailingAddress = in.readString();
-        preferredLanguage = in.readString();
-        displayName = in.readString();
-        personId = in.readString();
-        treeUserId = in.readString();
-    }
 }

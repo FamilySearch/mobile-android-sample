@@ -25,6 +25,8 @@ import java.util.List;
  */
 public class Utilities
 {
+    public static final String LOG_TAG = "FS_SampleApp";
+
     public static final String KEY_ACCESS_TOKEN = "access_token";
 
     public static final String KEY_SHARED_PREFERENCES = "shared_preferences";

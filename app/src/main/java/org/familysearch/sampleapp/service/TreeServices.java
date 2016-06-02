@@ -3,11 +3,7 @@ package org.familysearch.sampleapp.service;
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.activity.TreeActivity;
 import org.familysearch.sampleapp.listener.TreeListener;
-import org.familysearch.sampleapp.model.User;
-import org.familysearch.sampleapp.model.ancestry.Display;
-import org.familysearch.sampleapp.model.ancestry.Links;
-import org.familysearch.sampleapp.model.ancestry.LinksPersons;
-import org.familysearch.sampleapp.model.ancestry.Person;
+import org.familysearch.sampleapp.model.user.User;
 import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
@@ -26,7 +22,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

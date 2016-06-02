@@ -28,6 +28,9 @@
     <string name="person_details_birthdate">Birth:</string>
     <string name="person_details_deathdate">Death:</string>
 
+    <!-- Memories activity -->
+    <string name="memories_title">Memories</string>
+
     <!-- Error messages -->
     <string name="login_error_catalogs">Error getting the collection urls</string>
     <string name="login_error_token">Error getting the token. Check username and password</string>
