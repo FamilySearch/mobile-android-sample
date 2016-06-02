@@ -30,6 +30,7 @@
 
     <!-- Memories activity -->
     <string name="memories_title">Memories</string>
+    <string name="memories_downloading_memories">Downloading your memories...</string>
 
     <!-- Error messages -->
     <string name="login_error_catalogs">Error getting the collection urls</string>
