@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -96,6 +97,8 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
+                Log.i(Utilities.LOG_TAG, "TreeServices.getAncestryQueryUrlAsString() data: " + responseJsonObject.toString());
+
                 if (responseJsonObject.has("collections"))
                 {
                     JSONArray collectionsArray = responseJsonObject.getJSONArray("collections");
@@ -154,6 +157,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
+                Log.i(Utilities.LOG_TAG, "TreeServices.getAncestryTree() data: " + responseJsonObject.toString());
                 return Utilities.getListOfPersonsFromPersonsJsonObject(responseJsonObject);
             }
         }

@@ -4,6 +4,8 @@ import org.familysearch.sampleapp.AppKeys;
 import org.familysearch.sampleapp.activity.LoginActivity;
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.LoginListener;
+import org.familysearch.sampleapp.model.user.Artifacts;
+import org.familysearch.sampleapp.model.user.Links;
 import org.familysearch.sampleapp.model.user.User;
 import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
@@ -196,6 +198,26 @@ public class LoginServices extends AsyncTask<String, String, User> {
                     user.setDisplayName(userJsonObject.getString("displayName"));
                     user.setPersonId(userJsonObject.getString("personId"));
                     user.setTreeUserId(userJsonObject.getString("treeUserId"));
+
+                    if (userJsonObject.has("links"))
+                    {
+                        JSONObject linksJsonObject = userJsonObject.getJSONObject("links");
+
+                        if (linksJsonObject.has("artifacts"))
+                        {
+                            JSONObject artifactsJsonObject = linksJsonObject.getJSONObject("artifacts");
+
+                            if (artifactsJsonObject.has("href"))
+                            {
+                                Links links = new Links();
+                                Artifacts artifacts = new Artifacts();
+
+                                artifacts.setHref(artifactsJsonObject.getString("href"));
+                                links.setArtifacts(artifacts);
+                                user.setLinks(links);
+                            }
+                        }
+                    }
                 }
             }
         } catch (ProtocolException e) {
