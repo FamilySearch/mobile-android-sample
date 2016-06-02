@@ -15,13 +15,22 @@
     <string name="login_progress_message">Logging in...</string>
 
     <!-- Tree activity -->
+    <string name="tree_title">Ancestors</string>
     <string name="tree_downloading_geneaology">Downloading your geneaology...</string>
+    <string name="tree_name_placeholder">John Doe</string>
+    <string name="tree_lifespan_placeholder">1900 - 2000</string>
 
     <!-- Person details activity -->
+    <string name="person_details_title">Person</string>
+    <string name="person_details_name_placeholder">John Doe</string>
     <string name="person_details_birthdate_downloading">Downloading birth date...</string>
     <string name="person_details_deathdate_downloading">Downloading death date...</string>
     <string name="person_details_birthdate">Birth:</string>
     <string name="person_details_deathdate">Death:</string>
+
+    <!-- Memories activity -->
+    <string name="memories_title">Memories</string>
+    <string name="memories_downloading_memories">Downloading your memories...</string>
 
     <!-- Error messages -->
     <string name="login_error_catalogs">Error getting the collection urls</string>

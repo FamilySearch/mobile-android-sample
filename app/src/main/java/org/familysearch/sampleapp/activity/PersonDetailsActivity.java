@@ -23,6 +23,8 @@ public class PersonDetailsActivity extends AppCompatActivity implements ImageDow
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_details);
 
+        setTitle(getString(R.string.person_details_title));
+
         persons = getIntent().getParcelableExtra(Utilities.KEY_PERSONS);
 
         ImageView personPicture = (ImageView) findViewById(R.id.person_details_picture);

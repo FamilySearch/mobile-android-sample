@@ -3,11 +3,7 @@ package org.familysearch.sampleapp.service;
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.activity.TreeActivity;
 import org.familysearch.sampleapp.listener.TreeListener;
-import org.familysearch.sampleapp.model.User;
-import org.familysearch.sampleapp.model.ancestry.Display;
-import org.familysearch.sampleapp.model.ancestry.Links;
-import org.familysearch.sampleapp.model.ancestry.LinksPersons;
-import org.familysearch.sampleapp.model.ancestry.Person;
+import org.familysearch.sampleapp.model.user.User;
 import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.utils.Utilities;
 import org.json.JSONArray;
@@ -18,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -26,7 +23,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -56,6 +52,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
         progressDialog = new ProgressDialog(activity);
         progressDialog.setMessage(context.getString(R.string.tree_downloading_geneaology));
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
@@ -100,6 +97,8 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
+                Log.i(Utilities.LOG_TAG, "TreeServices.getAncestryQueryUrlAsString() data: " + responseJsonObject.toString());
+
                 if (responseJsonObject.has("collections"))
                 {
                     JSONArray collectionsArray = responseJsonObject.getJSONArray("collections");
@@ -158,6 +157,7 @@ public class TreeServices extends AsyncTask<String, String, List<Persons>> {
 
                 // convert the response from String to JSONObject
                 JSONObject responseJsonObject = new JSONObject(responseString);
+                Log.i(Utilities.LOG_TAG, "TreeServices.getAncestryTree() data: " + responseJsonObject.toString());
                 return Utilities.getListOfPersonsFromPersonsJsonObject(responseJsonObject);
             }
         }

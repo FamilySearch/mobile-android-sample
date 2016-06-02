@@ -1,12 +1,43 @@
-*.iml
-.gradle
-/.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
-/app/build
+# Temp files
+*~
+tmp/
 
+# NetBeans
+nb-configuration.xml
+# nbactions.xml
+
+# Eclipse
+.settings
+.classpath
+.project
+.mymetadata
+
+# IDEA
+*.ipr
+*.iml
+*.iws
+.idea/
+out/
+
+# Maven
+target/
+
+#gradle
+.gradle
+build
+
+# Android
+classes/
+bin/
+gen/
+gen-external-apklibs/
+libs/
+local.properties
+
+# Misc.
+.DS_Store
+*.orig
+*.hprof
+
+# Project Specific
 app/src/main/java/org/familysearch/sampleapp/AppKeys.java

@@ -3,7 +3,7 @@ package org.familysearch.sampleapp.activity;
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.adapter.TreeAdapter;
 import org.familysearch.sampleapp.listener.TreeListener;
-import org.familysearch.sampleapp.model.User;
+import org.familysearch.sampleapp.model.user.User;
 import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.service.TreeServices;
 import org.familysearch.sampleapp.utils.Utilities;
@@ -12,7 +12,6 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +21,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.StringTokenizer;
 
 public class TreeActivity extends ListActivity implements TreeListener {
 
@@ -30,9 +28,13 @@ public class TreeActivity extends ListActivity implements TreeListener {
 
     private List<Persons> personsList;
 
+    private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getActionBar().setTitle(getString(R.string.tree_title));
 
         // setup memory for image cache
         // Get max available VM memory, exceeding this amount will throw an
@@ -52,7 +54,7 @@ public class TreeActivity extends ListActivity implements TreeListener {
             }
         };
 
-        User user = getIntent().getParcelableExtra(Utilities.KEY_USER);
+        user = getIntent().getParcelableExtra(Utilities.KEY_USER);
 
         TreeServices task = new TreeServices(this, user);
         task.setOnTreeListener(this);
@@ -102,6 +104,9 @@ public class TreeActivity extends ListActivity implements TreeListener {
                         .show();
                 break;
             case R.id.menu_memories:
+                Intent intentMemories = new Intent(this, MemoriesActivity.class);
+                intentMemories.putExtra(Utilities.KEY_USER, user);
+                startActivity(intentMemories);
                 break;
         }
         return true;

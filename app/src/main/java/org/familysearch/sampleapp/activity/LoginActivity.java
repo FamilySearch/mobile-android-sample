@@ -2,7 +2,7 @@ package org.familysearch.sampleapp.activity;
 
 import org.familysearch.sampleapp.R;
 import org.familysearch.sampleapp.listener.LoginListener;
-import org.familysearch.sampleapp.model.User;
+import org.familysearch.sampleapp.model.user.User;
 import org.familysearch.sampleapp.service.LoginServices;
 import org.familysearch.sampleapp.utils.Utilities;
 
@@ -10,8 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
