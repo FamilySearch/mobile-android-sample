@@ -72,9 +72,11 @@ public class MemoryServices extends AsyncTask<String, String, List<Bitmap>>
     @Override
     protected List<Bitmap> doInBackground(String... params) {
 
+        // get the access token
         SharedPreferences preferences = context.getSharedPreferences(Utilities.KEY_SHARED_PREFERENCES, Context.MODE_PRIVATE);
         String accessToken = preferences.getString(Utilities.KEY_ACCESS_TOKEN, null);
 
+        // download and return a list of jpeg images from memories
         return getMemoriesImagesForUser(user, accessToken);
     }
 

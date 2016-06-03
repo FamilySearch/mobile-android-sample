@@ -8,21 +8,20 @@ import org.familysearch.sampleapp.model.ancestry.Persons;
 import org.familysearch.sampleapp.service.TreeServices;
 import org.familysearch.sampleapp.utils.Utilities;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
-public class TreeActivity extends ListActivity implements TreeListener {
+public class TreeActivity extends AppCompatActivity implements TreeListener {
 
     private LruCache<String, Bitmap> memoryCache;
 
@@ -33,8 +32,9 @@ public class TreeActivity extends ListActivity implements TreeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tree);
 
-        getActionBar().setTitle(getString(R.string.tree_title));
+        setTitle(getString(R.string.tree_title));
 
         // setup memory for image cache
         // Get max available VM memory, exceeding this amount will throw an
@@ -65,19 +65,11 @@ public class TreeActivity extends ListActivity implements TreeListener {
     public void onGeneaologySucceeded(List<Persons> personsList) {
         Toast.makeText(this, "Found " + personsList.size() + " people in your geneaology", Toast.LENGTH_LONG).show();
 
+        ListView listView = (ListView)findViewById(R.id.tree_listview);
+
         this.personsList = personsList;
         TreeAdapter treeAdapter = new TreeAdapter(this, personsList, memoryCache);
-        setListAdapter(treeAdapter);
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-        Persons persons = personsList.get(position);
-        Intent intent = new Intent(this, PersonDetailsActivity.class);
-        intent.putExtra(Utilities.KEY_PERSONS, persons);
-        startActivity(intent);
+        listView.setAdapter(treeAdapter);
     }
 
     @Override

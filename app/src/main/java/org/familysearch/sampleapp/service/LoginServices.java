@@ -77,9 +77,8 @@ public class LoginServices extends AsyncTask<String, String, User> {
         String token = getToken(Utilities.getUrlsFromCollections().getTokenUrlString(), username, password, AppKeys.API_KEY);
 
         // with the token, make another call the get the current user data
-        User user = getCurrentUserData(Utilities.getUrlsFromCollections().getCurrentUserString(), token);
-
-        return user;
+        // return the downloaded data
+        return getCurrentUserData(Utilities.getUrlsFromCollections().getCurrentUserString(), token);
     }
 
     private String getToken(String tokenUrlAsString, String username, String password, String client_id)

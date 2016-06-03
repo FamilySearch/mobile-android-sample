@@ -102,6 +102,7 @@ public class Utilities
         return links;
     }
 
+    // this method parses and returns a list of Persons object, based on the JsonObject received
     public static List<Persons> getListOfPersonsFromPersonsJsonObject(JSONObject personsJsonObject) throws JSONException {
         List<Persons> personsList = null;
         if (personsJsonObject.has("persons"))
