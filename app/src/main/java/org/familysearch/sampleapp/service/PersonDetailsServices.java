@@ -53,7 +53,7 @@ public class PersonDetailsServices extends AsyncTask <String, String, PersonDeta
     @Override
     protected PersonDetails doInBackground(String... params) {
 
-        // send url as first param
+        // we are passing the url as a string, coming from the first element in the params
         return downloadPersonDetailsData(params[0]);
     }
 

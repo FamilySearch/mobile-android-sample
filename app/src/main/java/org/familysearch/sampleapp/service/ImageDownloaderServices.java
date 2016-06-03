@@ -16,6 +16,8 @@ import java.net.URL;
 
 /**
  * @author Eduardo Flores
+ *
+ * Image Downloader Task used to only download images from a given url to an ImageView
  */
 public class ImageDownloaderServices extends AsyncTask<String, String, Bitmap> {
 
