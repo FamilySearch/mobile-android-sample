@@ -17,10 +17,6 @@ public class Persons implements Parcelable {
 
     private boolean living;
 
-    private Gender gender;
-
-    private List<Names> namesList;
-
     private Display display;
 
     public String getId() {
@@ -47,22 +43,6 @@ public class Persons implements Parcelable {
         this.living = living;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public List<Names> getNamesList() {
-        return namesList;
-    }
-
-    public void setNamesList(List<Names> namesList) {
-        this.namesList = namesList;
-    }
-
     public Display getDisplay() {
         return display;
     }
@@ -82,8 +62,6 @@ public class Persons implements Parcelable {
         dest.writeString(this.id);
         dest.writeParcelable(this.links, flags);
         dest.writeByte(this.living ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.gender, flags);
-        dest.writeList(this.namesList);
         dest.writeParcelable(this.display, flags);
     }
 
@@ -94,9 +72,6 @@ public class Persons implements Parcelable {
         this.id = in.readString();
         this.links = in.readParcelable(LinksPersons.class.getClassLoader());
         this.living = in.readByte() != 0;
-        this.gender = in.readParcelable(Gender.class.getClassLoader());
-        this.namesList = new ArrayList<Names>();
-        in.readList(this.namesList, Names.class.getClassLoader());
         this.display = in.readParcelable(Display.class.getClassLoader());
     }
 
